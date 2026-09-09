@@ -1,0 +1,139 @@
+name: Physical Verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  precheck-drc:
+    name: Precheck DRC
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Read info.json
+        id: info
+        run: |
+          echo "gds_path=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d['release']['gds'])")" >> "$GITHUB_OUTPUT"
+          echo "top_cell=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d['top_cell_name'])")" >> "$GITHUB_OUTPUT"
+          echo "pdk_version=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d['pdk_version'])")" >> "$GITHUB_OUTPUT"
+          echo "pdk_repo=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d.get('pdk_repository', 'https://github.com/IHP-GmbH/IHP-Open-PDK'))")" >> "$GITHUB_OUTPUT"
+
+      - name: Install KLayout
+        run: |
+          wget https://github.com/TinyTapeout/klayout/releases/download/v0.29.12/klayout_0.29.12-1_amd64.deb
+          sudo apt-get update
+          sudo apt-get install -y ./klayout_0.29.12-1_amd64.deb
+          klayout -v
+
+      - name: Clone IHP-Open-PDK
+        run: |
+          git clone "${{ steps.info.outputs.pdk_repo }}" IHP-Open-PDK
+          cd IHP-Open-PDK && git checkout "${{ steps.info.outputs.pdk_version }}"
+
+      - name: Run Precheck DRC (minimal rules)
+        shell: bash
+        run: |
+          set -eo pipefail
+          klayout -b -r IHP-Open-PDK/ihp-sg13g2/libs.tech/klayout/tech/drc/sg13g2_minimal.lydrc \
+            -rd "in_gds=${{ steps.info.outputs.gds_path }}" \
+            -rd "cell=${{ steps.info.outputs.top_cell }}" \
+            -rd "report_file=precheck_drc_report.lyrdb" \
+            2>&1 | tee precheck_drc.log
+
+      - name: Upload precheck DRC results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: precheck-drc-results
+          path: |
+            precheck_drc*
+            release/**/*.lyrdb
+
+  density-check:
+    name: Metal Density Check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Read info.json
+        id: info
+        run: |
+          echo "gds_path=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d['release']['gds'])")" >> "$GITHUB_OUTPUT"
+          echo "top_cell=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d['top_cell_name'])")" >> "$GITHUB_OUTPUT"
+          echo "pdk_version=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d['pdk_version'])")" >> "$GITHUB_OUTPUT"
+          echo "pdk_repo=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d.get('pdk_repository', 'https://github.com/IHP-GmbH/IHP-Open-PDK'))")" >> "$GITHUB_OUTPUT"
+
+      - name: Install KLayout
+        run: |
+          wget https://github.com/TinyTapeout/klayout/releases/download/v0.29.12/klayout_0.29.12-1_amd64.deb
+          sudo apt-get update
+          sudo apt-get install -y ./klayout_0.29.12-1_amd64.deb
+          klayout -v
+
+      - name: Clone IHP-Open-PDK
+        run: |
+          git clone "${{ steps.info.outputs.pdk_repo }}" IHP-Open-PDK
+          cd IHP-Open-PDK && git checkout "${{ steps.info.outputs.pdk_version }}"
+
+      - name: Run Metal Density Check
+        shell: bash
+        run: |
+          set -eo pipefail
+          klayout -b -zz \
+            -r IHP-Open-PDK/ihp-sg13g2/libs.tech/klayout/tech/drc/sg13g2_density.lydrc \
+            -rd "in_gds=${{ steps.info.outputs.gds_path }}" \
+            -rd "cell=${{ steps.info.outputs.top_cell }}" \
+            -rd "report_file=density_report.lyrdb" \
+            -rd "threads=4" \
+            2>&1 | tee density_report.log
+
+      - name: Upload density results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: density-results
+          path: |
+            density_report.*
+
+  zero-area-check:
+    name: Zero-Area Polygon Check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Read info.json
+        id: info
+        run: |
+          echo "gds_path=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d['release']['gds'])")" >> "$GITHUB_OUTPUT"
+          echo "top_cell=$(python3 -c "import json; d=json.load(open('doc/info.json')); print(d['top_cell_name'])")" >> "$GITHUB_OUTPUT"
+
+      - name: Install KLayout Python module
+        run: pip install klayout==0.30.12
+
+      - name: Run Zero-Area Polygon Check
+        shell: bash
+        run: |
+          set -eo pipefail
+          python3 .github/scripts/zero_area_check.py \
+            "${{ steps.info.outputs.gds_path }}" \
+            --cell "${{ steps.info.outputs.top_cell }}" \
+            --report zero_area_report.txt \
+            2>&1 | tee zero_area_check.log
+
+      - name: Upload zero-area check results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: zero-area-results
+          path: |
+            zero_area_*

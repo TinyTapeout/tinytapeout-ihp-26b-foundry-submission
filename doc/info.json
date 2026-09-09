@@ -1,0 +1,33 @@
+{
+  "name": "TT2609",
+  "design_type": "M",
+  "technology": "IHP",
+  "unique_id": "2609",
+  "license": "Apache-2.0",
+  "trl": 5,
+  "trl_level": 5,
+  "sealring_x": 3600.0,
+  "sealring_y": 5000.0,
+  "repository": "https://github.com/TinyTapeout/tinytapeout-ihp-26b-foundry-submission",
+  "pdk_version": "e16d00b7b26a93956563c373b782f54dd4d77a7f",
+  "pdk_repository": "https://github.com/TinyTapeout/IHP-Open-PDK",
+  "process": "SG13G2",
+  "dependencies": {},
+  "tools": {
+    "LibreLane": "RTL-to-GDS flow",
+    "OpenROAD": "Place and Route",
+    "Yosys": "Synthesis",
+    "Magic": "SPICE extraction",
+    "Netgen": "LVS",
+    "KLayout": "DRC, GDS streamout"
+  },
+  "top_cell_name": "TT2609",
+  "gds_path": "release/v.1.0.0/gds/TT2609.oas",
+  "netlist_path": "release/v.1.0.0/netlist/tt_ihp_wrapper.nl.v",
+  "release": {
+    "version": "v.1.0.0",
+    "gds": "release/v.1.0.0/gds/TT2609.oas",
+    "netlist": "release/v.1.0.0/netlist/tt_ihp_wrapper.nl.v",
+    "doc": "release/v.1.0.0/doc"
+  }
+}

@@ -1,0 +1,69 @@
+name: Update TT2609 release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      SOURCE_REPO: TinyTapeout/tinytapeout-ihp-26b
+      WORKFLOW: gds.yaml
+      ARTIFACT_NAME: foundry_submission
+      DEST: release/v.1.0.0
+      OAS_FILE: gds/TT2609.oas
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Find last successful GDS run
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RUN_ID=$(gh run list --repo "$SOURCE_REPO" --workflow "$WORKFLOW" --status success --limit 1 --json databaseId --jq '.[0].databaseId')
+          if [ -z "$RUN_ID" ]; then
+            echo "Error: No successful workflow run found" >&2
+            exit 1
+          fi
+          RUN_COMMIT=$(gh run view "$RUN_ID" --repo "$SOURCE_REPO" --json headSha --jq '.headSha')
+          echo "RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
+          echo "RUN_COMMIT=$RUN_COMMIT" >> "$GITHUB_ENV"
+          echo "SHORT_HASH=${RUN_COMMIT:0:8}" >> "$GITHUB_ENV"
+
+      - name: Download artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run download "$RUN_ID" --repo "$SOURCE_REPO" --name "$ARTIFACT_NAME" --dir /tmp/artifact
+
+      - name: Update release files
+        run: |
+          cp "/tmp/artifact/$OAS_FILE" "$DEST/gds/TT2609.oas"
+          cp /tmp/artifact/verilog/gl/tt_ihp_wrapper.nl.v "$DEST/netlist/tt_ihp_wrapper.nl.v"
+          cp /tmp/artifact/verilog/gl/tt_ihp_wrapper.v "$DEST/netlist/tt_ihp_wrapper.v"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$DEST/gds/TT2609.oas" "$DEST/netlist/tt_ihp_wrapper.nl.v" "$DEST/netlist/tt_ihp_wrapper.v"
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            printf '%s\n\n%s\n%s\n' \
+              "chore: update TT2609 release ($SHORT_HASH)" \
+              "Commit: https://github.com/$SOURCE_REPO@$RUN_COMMIT" \
+              "Workflow URL: https://github.com/$SOURCE_REPO/actions/runs/$RUN_ID" \
+              | git commit -F-
+            git push
+          fi
+
+      - name: Write step summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
+          ## Updated TT2609 release
+
+          - **Workflow run:** [$RUN_ID](https://github.com/$SOURCE_REPO/actions/runs/$RUN_ID)
+          - **Source commit:** [\`$SHORT_HASH\`](https://github.com/$SOURCE_REPO/commit/$RUN_COMMIT)
+          EOF
