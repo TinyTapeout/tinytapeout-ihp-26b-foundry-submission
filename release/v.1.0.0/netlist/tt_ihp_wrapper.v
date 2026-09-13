@@ -4982,6 +4982,30 @@ module tt_ihp_wrapper (iovdd,
  wire \top_I.branch[8].check_mask.block[10].um_I.iw[8] ;
  wire \top_I.branch[8].check_mask.block[10].um_I.iw[9] ;
  wire \top_I.branch[8].check_mask.block[10].um_I.k_zero ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[0] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[10] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[11] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[12] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[13] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[14] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[15] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[16] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[17] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[18] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[19] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[1] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[20] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[21] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[22] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[23] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[2] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[3] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[4] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[5] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[6] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[7] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[8] ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.ow[9] ;
  wire \top_I.branch[8].check_mask.block[10].um_I.pg_ena ;
  wire \top_I.branch[8].check_mask.block[11].um_I.clk ;
  wire \top_I.branch[8].check_mask.block[11].um_I.ena ;
@@ -5487,6 +5511,7 @@ module tt_ihp_wrapper (iovdd,
  wire \top_I.branch[3].check_mask.block[4].um_I.block_3_4.vdpwr ;
  wire \top_I.branch[3].check_mask.block[6].um_I.block_3_6.vdpwr ;
  wire \top_I.branch[3].check_mask.block[8].um_I.block_3_8.vdpwr ;
+ wire \top_I.branch[8].check_mask.block[10].um_I.block_8_10.vdpwr ;
  wire [63:0] pad_raw;
 
  sg13g2_IOPadIn \gpio[0].gpio_I.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.pad_I  (.iovdd(iovdd),
@@ -10988,7 +11013,7 @@ module tt_ihp_wrapper (iovdd,
     .VPWR(vdpwr),
     .GPWR(\top_I.branch[18].check_mask.block[11].um_I.block_18_11.vdpwr ),
     .ctrl(\top_I.branch[18].check_mask.block[11].um_I.pg_ena ));
- tt_um_npu \top_I.branch[18].check_mask.block[11].um_I.block_18_11.tt_um_I  (.VGND(vgnd),
+ tt_um_barrel_shifter \top_I.branch[18].check_mask.block[11].um_I.block_18_11.tt_um_I  (.VGND(vgnd),
     .VPWR(\top_I.branch[18].check_mask.block[11].um_I.block_18_11.vdpwr ),
     .clk(\top_I.branch[18].check_mask.block[11].um_I.clk ),
     .ena(\top_I.branch[18].check_mask.block[11].um_I.ena ),
@@ -16698,6 +16723,55 @@ module tt_ihp_wrapper (iovdd,
     \top_I.branch[7].check_mask.block[2].um_I.pg_ena ,
     \top_I.branch[7].check_mask.block[1].um_I.pg_ena ,
     \top_I.branch[7].check_mask.block[0].um_I.pg_ena }));
+ tt_pg_1v5_ll_1 \top_I.branch[8].check_mask.block[10].um_I.block_8_10.tt_pg_vdd_I  (.VGND(vgnd),
+    .VPWR(vdpwr),
+    .GPWR(\top_I.branch[8].check_mask.block[10].um_I.block_8_10.vdpwr ),
+    .ctrl(\top_I.branch[8].check_mask.block[10].um_I.pg_ena ));
+ tt_um_c061618g2 \top_I.branch[8].check_mask.block[10].um_I.block_8_10.tt_um_I  (.VGND(vgnd),
+    .VPWR(\top_I.branch[8].check_mask.block[10].um_I.block_8_10.vdpwr ),
+    .clk(\top_I.branch[8].check_mask.block[10].um_I.clk ),
+    .ena(\top_I.branch[8].check_mask.block[10].um_I.ena ),
+    .rst_n(\top_I.branch[8].check_mask.block[10].um_I.iw[1] ),
+    .ui_in({\top_I.branch[8].check_mask.block[10].um_I.iw[9] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[8] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[7] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[6] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[5] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[4] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[3] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[2] }),
+    .uio_in({\top_I.branch[8].check_mask.block[10].um_I.iw[17] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[16] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[15] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[14] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[13] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[12] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[11] ,
+    \top_I.branch[8].check_mask.block[10].um_I.iw[10] }),
+    .uio_oe({\top_I.branch[8].check_mask.block[10].um_I.ow[23] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[22] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[21] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[20] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[19] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[18] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[17] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[16] }),
+    .uio_out({\top_I.branch[8].check_mask.block[10].um_I.ow[15] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[14] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[13] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[12] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[11] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[10] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[9] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[8] }),
+    .uo_out({\top_I.branch[8].check_mask.block[10].um_I.ow[7] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[6] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[5] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[4] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[3] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[2] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[1] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[0] }));
  tt_mux \top_I.branch[8].check_mask.mux_I  (.VGND(vgnd),
     .VPWR(vdpwr),
     .k_one(\top_I.branch[8].check_mask.l_addr[2] ),
@@ -17026,30 +17100,30 @@ module tt_ihp_wrapper (iovdd,
     \top_I.branch[8].check_mask.block[11].um_I.k_zero ,
     \top_I.branch[8].check_mask.block[11].um_I.k_zero ,
     \top_I.branch[8].check_mask.block[11].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
-    \top_I.branch[8].check_mask.block[10].um_I.k_zero ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[23] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[22] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[21] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[20] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[19] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[18] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[17] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[16] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[15] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[14] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[13] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[12] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[11] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[10] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[9] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[8] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[7] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[6] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[5] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[4] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[3] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[2] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[1] ,
+    \top_I.branch[8].check_mask.block[10].um_I.ow[0] ,
     \top_I.branch[8].check_mask.block[9].um_I.k_zero ,
     \top_I.branch[8].check_mask.block[9].um_I.k_zero ,
     \top_I.branch[8].check_mask.block[9].um_I.k_zero ,
