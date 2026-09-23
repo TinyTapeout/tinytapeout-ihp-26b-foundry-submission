@@ -6,7 +6,7 @@ Multi-Project Carrier (MPC) chip for the IHP SG13G2 Open-Silicon MPW September 2
 
 Tiny Tapeout IHP 26b is an educational ASIC that aggregates user-submitted
 chip designs onto a single die manufactured on the **IHP SG13G2** 130nm BiCMOS process.
-The current release contains 36 user projects (built 2026-09-08; the shuttle closes on 2026-09-21).
+The current release contains 123 user projects.
 
 - **Category:** Mixed-Signal
 - **Subcategory:** Multi Project Carrier (MPC)

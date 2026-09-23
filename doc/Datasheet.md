@@ -3,10 +3,8 @@
 ## General Description
 
 Tiny Tapeout IHP 26b (TTIHP26b) is a multi-project carrier chip fabricated on the
-IHP SG13G2 130nm BiCMOS process. It aggregates independently designed user
-projects onto a single die using a multiplexer architecture. The current release
-contains 36 digital user projects (built 2026-09-08; the shuttle closes on
-2026-09-21).
+IHP SG13G2 130nm BiCMOS process. It aggregates 123 independently designed user
+projects onto a single die using a multiplexer architecture.
 
 ## Key Specifications
 

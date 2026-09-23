@@ -26,6 +26,6 @@
 - Die: 3600 x 5000 um
 - Grid: 12 x 20 tiles (240 project slots)
 - Top cell: TT2609
-- User projects: 36 (shuttle open until 2026-09-21)
-- Built from: https://github.com/TinyTapeout/tinytapeout-ihp-26b (commit 34848a7)
-- Build workflow: https://github.com/TinyTapeout/tinytapeout-ihp-26b/actions/runs/34266123820
+- User projects: 123
+- Built from: https://github.com/TinyTapeout/tinytapeout-ihp-26b (commit 6e6087f7)
+- Build workflow: https://github.com/TinyTapeout/tinytapeout-ihp-26b/actions/runs/35709056673
